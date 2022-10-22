@@ -8,7 +8,7 @@ on:
 jobs:
 
   tidy-meta-template:
-    if: ${{ endsWith(github.repository, '-auto-template') && github.repository != "ajparsons/base-auto-template"  }}
+    if: ${{ endsWith(github.repository, '-auto-template') && github.repository != 'ajparsons/base-auto-template'  }}
     runs-on: ubuntu-latest
 
     steps:
