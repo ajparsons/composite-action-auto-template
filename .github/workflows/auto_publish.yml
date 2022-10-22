@@ -1,0 +1,30 @@
+# Generic tool to run publication workflows on main branch. Call test suite first.
+
+name: "Publish package"
+
+# don't allow multiple 'identical' processes to run. A second push should cancel the job from the first one.
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}-${{ github.event.inputs.pypi }}-${{ github.event.inputs.testpypi }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+
+# run the tests first, if this fails nothing continues
+  test:
+    uses: ./.github/workflows/test.yml
+
+  # run auto either if nothing explicit forced in workflow or it is a push event
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: hello world
+        shell: bash
+        run: |
+          echo "hello world"

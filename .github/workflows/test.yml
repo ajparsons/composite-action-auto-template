@@ -1,0 +1,21 @@
+name: Run tests
+
+on:
+  push:
+    branches-ignore: [ main ]
+  pull_request:
+    branches-ignore: [ main ]
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  test:
+    if: ${{ !endsWith(github.repository, '-auto-template') }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: hello world
+        shell: bash
+        run: |
+          echo "hello world - test"
