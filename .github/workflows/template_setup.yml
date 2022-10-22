@@ -19,7 +19,7 @@ jobs:
       - name: Ensure right repo referenced in urls in readme
         shell: bash
         run: |
-          sed s#$BASENAME#$GITHUB_REPOSITORY#g README.md
+          sed -i 's#$BASENAME#$GITHUB_REPOSITORY#g' README.md
         env:
           BASE_NAME: ajparsons/base-auto-template
 
