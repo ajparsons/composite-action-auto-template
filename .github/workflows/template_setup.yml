@@ -41,57 +41,9 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
-      
-      - name: Install cookiecutter
-        run: pip install cookiecutter
 
-      - uses: actions/github-script@v4
-        id: fetch-repo-and-user-details
-        with:
-          script: |
-            const query = `query($owner:String!, $name:String!) {
-              repository(owner:$owner, name:$name) {
-                name
-                description
-                owner {
-                  login
-                  ... on User {
-                    name
-                  }
-                  ... on Organization {
-                    name
-                  }
-                }
-              }
-            }`;
-            const variables = {
-              owner: context.repo.owner,
-              name: context.repo.repo
-            }
-            const result = await github.graphql(query, variables)
-            console.log(result)
-            return result
-
-      - name: Rebuild contents using cookiecutter
-        env:
-          INFO: ${{ steps.fetch-repo-and-user-details.outputs.result }}
-        run: |
-          export REPO_NAME=$(echo $INFO | jq -r '.repository.name')
-          pushd /tmp
-          cookiecutter $GITHUB_WORKSPACE --no-input \
-            lib_name=$REPO_NAME \
-            description="$(echo $INFO | jq -r .repository.description)" \
-            github_username="$(echo $INFO | jq -r .repository.owner.login)" \
-            author_name="$(echo $INFO | jq -r .repository.owner.name)" \
-            author_email="${{ github.event.pusher.email }}" \
-            github_id=$GITHUB_REPOSITORY
-          popd
-          mv .git /tmp/git-store
-          rm -r ./*
-          rm -r ./.[!.]* 
-          mv /tmp/$REPO_NAME/* .
-          mv /tmp/$REPO_NAME/.[!.]* .
-          mv /tmp/git-store .git
+      - uses: ajparsons/github-template-setup@5ca8d1a399be232a8e39ea3c88b873af11ce33b5 # v0.1.0
+        name: Setup repo
 
       - name: Force push new repo contents
         uses: stefanzweifel/git-auto-commit-action@v4
