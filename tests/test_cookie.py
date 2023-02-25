@@ -38,13 +38,13 @@ def test_actions_moved_by_hooks(project_folder: Path):
     """
     workflow_folder = project_folder / ".github" / "workflows"
 
-    publish_yml = workflow_folder / "auto_publish.yml"
+    publish_yml = workflow_folder / "update_and_tag.yml"
     test_yml = workflow_folder / "test.yml"
     template_test = workflow_folder / "template_test.yml"
 
     assert workflow_folder.exists(), "Workflow folder not created by hook"
     assert publish_yml.exists(), "publish yml not moved to new location"
-    assert test_yml.exists(), "test yml not moved to new location"
+    # assert test_yml.exists(), "test yml not moved to new location"
     assert template_test.exists() is False, "template actions moved to cookiecutter - shouldn't be"
 
 

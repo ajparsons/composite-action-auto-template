@@ -1,10 +1,14 @@
-# Base project template
+# GitHub Actions Composite Action Template
 
-This is a base version of the github/cookiecutter template.
+Template to create a new composite action, with some supporting self-describing release scripts.
 
-All it does it create an empty folder with readme, changelog, licence, and an empty version of testing and publishing workflows.
+Updates to `action.yml` update `README.md` based on the input and output description.
 
-This is based on the general approach of [simonw/python-lib](https://github.com/simonw/python-lib), but with a different default structure. 
+By default, the action has a step to check if this reference is being referenced by commit hash rather than tag or branch - and raises a warning if not.
+
+An extra `version` property in `action.yml` expects a semver. This is used to create releases when the version is updated.
+
+The templating process is based on the general approach of [simonw/python-lib](https://github.com/simonw/python-lib), but with a different default structure. 
 
 # Creating a new template
 
@@ -30,7 +34,7 @@ python -m cookiecutter https://github.com/ajparsons/composite-action-auto-templa
 
 If you want to modify or extend this approach - the self-bootstrapping behaviour will only happen when a repo does *not* end in '-auto-template'. If you clone this repo, into a different user or org space, it will not self-bootstrap because the name is the same.
 
-If you wanted to extend this into a basic django template - you might fork or clone the repo and call it 'django-auto-template'. This will not self-bootstrap, but new projects created from that template would. 
+For example, if you wanted to extend this into a basic django template - you might fork or clone the repo and call it 'django-auto-template'. This will not self-bootstrap, but new projects created from that template would. 
 
 ## Meta tests
 
