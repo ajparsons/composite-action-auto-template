@@ -2,6 +2,12 @@
 # Also do version releases and update git tags
 name: "Update and tag"
 
+permissions:
+  actions: write
+  contents: write
+  packages: write
+
+
 # don't allow multiple 'identical' processes to run. A second push should cancel the job from the first one.
 concurrency: 
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}-${{ github.event.inputs.pypi }}-${{ github.event.inputs.testpypi }}
@@ -36,7 +42,7 @@ jobs:
           semver: ${{ steps.get_version.outputs.value }}
           update_tags: true
 
-      - uses: ajparsons/auto-action-readme@1f153f1aa27ac190249281d31304893d433d7e6e # v1.0.1
+      - uses: ajparsons/auto-action-readme@f6f2f60cdfce35c571e92fbd001d66d81ff43ddd # v1.0.2
         with:
           tag: ${{ steps.update_tags.outputs.major_tag }}
           output_file: README.md
