@@ -16,7 +16,7 @@ runs:
   steps:
 
     - name: Test if this action is being referenced safely
-      uses: ajparsons/sha-version-warning@53c5e9cbf96afb276cb2cf486ebd45c5d5db0e11 # v1.0.1
+      uses: ajparsons/sha-version-warning@41005e65e1589d6267837e9959a5b4aabc55ddf8 # v1.0.2
       with: 
         action_path: ${{ '{{' }} github.action_path {{ '}}' }}
 

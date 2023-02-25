@@ -42,7 +42,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
 
-      - uses: ajparsons/github-template-setup@v0.1.4
+      - uses: ajparsons/github-template-setup@v0.1.5
         name: Setup repo
 
       - name: Force push new repo contents
