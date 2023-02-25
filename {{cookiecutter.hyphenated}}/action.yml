@@ -26,5 +26,5 @@ runs:
       run: |
         echo "example_output=hello world $EXAMPLE_INPUT" >> $GITHUB_OUTPUT
       env:
-        EXAMPLE_INPUT: ${{ '{{' }}{{ inputs.example_input {{ '}}' }}
+        EXAMPLE_INPUT: ${{ '{{' }} inputs.example_input {{ '}}' }}
     
