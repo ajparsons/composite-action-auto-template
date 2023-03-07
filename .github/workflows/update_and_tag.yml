@@ -42,9 +42,11 @@ jobs:
           semver: ${{ steps.get_version.outputs.value }}
           update_tags: true
 
-      - uses: ajparsons/auto-action-readme@f6f2f60cdfce35c571e92fbd001d66d81ff43ddd # v1.0.2
+      - uses: ajparsons/auto-action-readme@cef8800ceae3c234db511988875475ed44d69802 # v1.1.0
+        id: first-round-readme
         with:
-          tag: ${{ steps.update_tags.outputs.major_tag }}
+          tag: ${{ steps.update_tags.outputs.patch_tag }}
+          comment: Replace with commit hash for safety
           output_file: README.md
           commit_and_push: true
 
@@ -57,3 +59,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.update_tags.outputs.patch_tag }}
+
+      - uses: ajparsons/auto-action-readme@cef8800ceae3c234db511988875475ed44d69802 # v1.1.0
+        if: ${{ steps.first-round-readme.outputs.changes_detected }}
+        with:
+          tag: ${{ steps.first-round-readme.outputs.commit_hash }}
+          comment: ${{ steps.update_tags.outputs.patch_tag }}
+          output_file: README.md
+          commit_and_push: true
